@@ -100,11 +100,12 @@ npm run dev
 
 ### Environment Variables (.env)
 
-**Opsiyonel** - Sadece özel konfigürasyon için gerekli:
+**Tamamen Opsiyonel** - Varsayılan ayarlar yeterlidir:
 
 ```env
-# MCP Server Token (opsiyonel - ayarlanmazsa otomatik oluşturulur)
-MCP_TOKEN=your-secure-token-here
+# MCP Server Token (SADECE remote erişim için gerekli)
+# Lokal kullanımda (Windsurf/Claude) token'a gerek YOK
+# MCP_TOKEN=your-secure-token-here
 
 # Optional: Drupal root path override
 # DRUPAL_ROOT=/path/to/drupal
@@ -362,9 +363,20 @@ Views listesini veya belirli bir view'ı export eder.
 
 ## 🔐 Güvenlik
 
-### Token Authentication
+### Token Authentication (Opsiyonel)
 
-Her MCP request'inde `MCP_TOKEN` environment variable'ı kontrol edilir.
+**Lokal kullanımda gerekli değil.** Token sadece şu durumlarda kullanılır:
+- Remote network üzerinden erişim
+- Çoklu kullanıcı senaryoları
+- Production deployment
+
+Windsurf veya Claude Desktop ile lokal kullanımda token kontrolü devre dışı bırakılabilir:
+
+```yaml
+# config.yaml
+rbac:
+  enabled: false  # Token kontrolünü kapat
+```
 
 ### RBAC (Role-Based Access Control)
 
@@ -576,17 +588,3 @@ npm run test:coverage
 
 Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
 
-## 🙏 Teşekkürler
-
-- [Model Context Protocol](https://modelcontextprotocol.io/) - MCP spesifikasyonu
-- [DDEV](https://ddev.com/) - Local development environment
-- [Drupal](https://www.drupal.org/) - Content management system
-
-## 📞 İletişim
-
-- Issues: [GitHub Issues](https://github.com/oguzhanfiliz/drupal-mcp/issues)
-- Discussions: [GitHub Discussions](https://github.com/oguzhanfiliz/drupal-mcp/discussions)
-
----
-
-**Made with ❤️ for the Drupal community**
