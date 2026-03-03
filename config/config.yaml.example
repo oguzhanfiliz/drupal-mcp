@@ -1,0 +1,107 @@
+# Drupal MCP Server Configuration
+
+server:
+  transport: stdio        # stdio | http
+  port: 3000              # Only used for HTTP transport
+  token: "${MCP_TOKEN}"   # Auth token (use env var)
+  rate_limit_rpm: 60
+  max_response_size: 50000
+  environment: development
+
+# Role-Based Access Control
+rbac:
+  roles:
+    admin:
+      permissions:
+        - read_only
+        - code_read
+        - config_read
+        - schema_read
+        - content_read
+        - drush_exec
+    developer:
+      permissions:
+        - read_only
+        - code_read
+        - config_read
+        - schema_read
+        - content_read
+    viewer:
+      permissions:
+        - read_only
+  
+  # Token-to-role mapping
+  tokens:
+    "${MCP_TOKEN}": admin
+
+# Sites configuration
+# You can manually list sites or use auto_discover
+sites:
+  auto_discover: true   # Use 'ddev list' to find sites
+  
+  # Manual site definitions (optional, merged with auto-discovered)
+  # manual:
+  #   - name: my-drupal-site
+  #     path: /path/to/drupal/project
+  #     config_sync_dir: config/sync
+  #     environment: production
+
+# Security settings
+security:
+  # Paths allowed for file reading (relative to Drupal root)
+  allowed_paths:
+    - web/modules/custom/**
+    - web/themes/custom/**
+    - web/sites/**/settings*.php
+    - config/sync/**
+    - composer.json
+    - composer.lock
+
+  # Paths explicitly denied
+  denied_paths:
+    - "**/.env"
+    - "**/.git/**"
+    - "**/vendor/**"
+    - "**/node_modules/**"
+    - "**/*.sql"
+    - "**/*.sql.gz"
+
+  # Secret patterns to redact (regex)
+  secret_patterns:
+    - "(password|passwd|pass|pwd)\\s*[:=]\\s*['\"]?[^\\s'\"]*"
+    - "(api_key|apikey|api-key|secret_key|secret)\\s*[:=]\\s*['\"]?[^\\s'\"]*"
+    - "(token|auth_token|access_token)\\s*[:=]\\s*['\"]?[^\\s'\"]*"
+    - "(database_url|db_url|mysql://|postgres://|mongodb://)\\S+"
+    - "(AWS_ACCESS_KEY|AWS_SECRET)\\S+"
+
+  # PII patterns to redact (regex)
+  pii_patterns:
+    - "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    - "\\b\\d{3}[-.]?\\d{3}[-.]?\\d{4}\\b"
+    - "\\b\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b"
+
+  # PII allowlist (won't be redacted)
+  pii_allowlist:
+    - "noreply@example.com"
+    - "127.0.0.1"
+    - "localhost"
+
+# Drush command allowlist
+drush:
+  safe_mode: true
+  allowed_commands:
+    - pm:list
+    - cget
+    - config:status
+    - config:get
+    - core:status
+    - entity:updates
+    - views:list
+    - sql:query     # Only with schema-related queries
+    - state:get
+
+# Audit logging
+audit:
+  enabled: true
+  log_path: ./logs/audit.log
+  log_level: info
