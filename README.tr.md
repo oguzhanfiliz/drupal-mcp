@@ -70,45 +70,28 @@ DDEV üzerinden çalışan çoklu Drupal projelerinizi LLM'lere (Claude, ChatGPT
 ### 5 Dakikada Kurulum
 
 ```bash
-# 1. Projeyi klonla
-git clone https://github.com/KULLANICI_ADINIZ/drupal-mcp-server.git
-cd drupal-mcp-server
-
-# 2. Bağımlılıkları yükle
+# 1. Klonla ve kur
+git clone https://github.com/oguzhanfiliz/drupal-mcp.git
+cd drupal-mcp
 npm install
-
-# 3. Build et
 npm run build
 
-# 4. Config dosyalarını oluştur
-cp config/config.yaml.example config/config.yaml
-cp .env.example .env
-
-# 5. Token oluştur (.env dosyasını düzenle)
-echo "MCP_TOKEN=$(openssl rand -hex 32)" >> .env
-
-# 6. Test et
+# 2. Başlat (DDEV sitelerini otomatik bulur)
 npm start
 ```
 
+Bu kadar! Server DDEV sitelerinizi otomatik keşfeder ve güvenli varsayılan ayarları kullanır.
+
 ## 📦 Kurulum
 
-### NPM ile Kurulum
-
 ```bash
+git clone https://github.com/oguzhanfiliz/drupal-mcp.git
+cd drupal-mcp
 npm install
 npm run build
 ```
 
-### Yarn ile Kurulum
-
-```bash
-yarn install
-yarn build
-```
-
-### Development Mode
-
+**Development Mode:**
 ```bash
 npm run dev
 ```
@@ -117,8 +100,10 @@ npm run dev
 
 ### Environment Variables (.env)
 
+**Opsiyonel** - Sadece özel konfigürasyon için gerekli:
+
 ```env
-# MCP Server Token (zorunlu)
+# MCP Server Token (opsiyonel - ayarlanmazsa otomatik oluşturulur)
 MCP_TOKEN=your-secure-token-here
 
 # Optional: Drupal root path override
@@ -599,8 +584,8 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 
 ## 📞 İletişim
 
-- Issues: [GitHub Issues](https://github.com/KULLANICI_ADINIZ/drupal-mcp-server/issues)
-- Discussions: [GitHub Discussions](https://github.com/KULLANICI_ADINIZ/drupal-mcp-server/discussions)
+- Issues: [GitHub Issues](https://github.com/oguzhanfiliz/drupal-mcp/issues)
+- Discussions: [GitHub Discussions](https://github.com/oguzhanfiliz/drupal-mcp/discussions)
 
 ---
 
