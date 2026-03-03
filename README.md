@@ -377,9 +377,20 @@ Lists views or exports a specific view.
 
 ## 🔐 Security
 
-### Token Authentication
+### Token Authentication (Optional)
 
-Every MCP request checks the `MCP_TOKEN` environment variable.
+**Not required for local use.** Token is only needed for:
+- Remote network access
+- Multi-user scenarios
+- Production deployments
+
+For local use with Windsurf or Claude Desktop, you can disable token checking:
+
+```yaml
+# config.yaml
+rbac:
+  enabled: false  # Disable token authentication
+```
 
 ### RBAC (Role-Based Access Control)
 
@@ -590,18 +601,3 @@ npm run test:coverage
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [Model Context Protocol](https://modelcontextprotocol.io/) - MCP specification
-- [DDEV](https://ddev.com/) - Local development environment
-- [Drupal](https://www.drupal.org/) - Content management system
-
-## 📞 Contact
-
-- Issues: [GitHub Issues](https://github.com/YOUR_USERNAME/drupal-mcp-server/issues)
-- Discussions: [GitHub Discussions](https://github.com/YOUR_USERNAME/drupal-mcp-server/discussions)
-
----
-
-**Made with ❤️ for the Drupal community**
